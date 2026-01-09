@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About — Cox’s Bazar Guide</title>
+  <meta name="description" content="About this Cox’s Bazar guide website: purpose, credits, and contact." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="brand"><span class="dot"></span> Cox’s Bazar Guide</div>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="beaches.html">Beaches</a></li>
+        <li><a href="attractions.html">Attractions</a></li>
+        <li><a href="food-culture.html">Food & Culture</a></li>
+        <li><a href="travel-tips.html">Travel tips</a></li>
+        <li><a href="about.html" aria-current="page">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="section">
+    <h1>About this guide</h1>
+    <p class="meta">A lightweight, readable site built to help you plan a coastal escape in Bangladesh.</p>
+    <div class="card">
+      <h3>Purpose</h3>
+      <p>I created for those travelers out there who needs guides for videos, travel and other things.</p>
+      <h3>Credits</h3>
+      <p>Photos: I grabbed the pictures from Google.</p>
+      <h3>Contact</h3>
+      <p>You can contact me from my YouTube channel, the link is: https://www.youtube.com/@DhruboGamerYT</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>© Cox’s Bazar Guide. Built with simple HTML & CSS.</p>
+  </div>
+</footer>
+<script>
+  const DURATION = 500; // match CSS transition time
+
+  function isInternal(link) {
+    try {
+      const url = new URL(link.href, window.location.href);
+      return (
+        url.origin === window.location.origin &&
+        url.pathname !== window.location.pathname &&
+        link.target !== "_blank" &&
+        url.hash === ""
+      );
+    } catch {
+      return false;
+    }
+  }
+
+  // Animate on page load
+  window.addEventListener("load", () => {
+    const page = document.getElementById("page");
+    if (!page) return;
+    page.classList.add("page-enter");
+    requestAnimationFrame(() => {
+      page.classList.add("page-enter-active");
+      page.addEventListener("transitionend", () => {
+        page.classList.remove("page-enter", "page-enter-active");
+      }, { once: true });
+    });
+  });
+
+  // Animate on navigation
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("a");
+    if (!link) return;
+    if (!isInternal(link)) return;
+
+    e.preventDefault();
+    const page = document.getElementById("page");
+    if (!page) {
+      window.location.href = link.href;
+      return;
+    }
+
+    page.classList.add("page-exit");
+    requestAnimationFrame(() => {
+      page.classList.add("page-exit-active");
+      page.addEventListener("transitionend", () => {
+        window.location.href = link.href;
+      }, { once: true });
+
+      setTimeout(() => { window.location.href = link.href; }, DURATION + 50);
+    });
+  });
+</script>
+</body>
+</html>
